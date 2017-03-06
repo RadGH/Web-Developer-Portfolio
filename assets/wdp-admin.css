@@ -1,7 +1,18 @@
+/* ACF Fields */
 .acf-field.acf-field-58bcd0c674841 .acf-field-gallery {
 	min-height: 0 !important;
 }
 
 .acf-field.acf-field-58bcd0c674841 .acf-field-gallery .acf-gallery {
 	height: 230px !important;
+}
+
+/* Admin columns: Featured / Project image */
+.column-project_featured {
+	width: 100px;
+	white-space: nowrap;
+}
+
+.column-project_image {
+	width: 180px;
 }

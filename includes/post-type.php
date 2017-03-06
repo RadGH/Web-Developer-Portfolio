@@ -37,7 +37,7 @@ function wdp_register_portfolio_project_post_type() {
 		'label'                 => 'Project',
 		'description'           => 'Displays projects for your web development portfolio',
 		'labels'                => $labels,
-		'supports'              => array( 'title', 'editor', 'revisions', ),
+		'supports'              => array( 'title', 'editor', 'excerpt', 'revisions', ),
 		'taxonomies'            => array( 'project_cat', ' project_tag' ),
 		'hierarchical'          => false,
 		'public'                => true,
@@ -127,3 +127,70 @@ function wdp_register_portfolio_project_post_type() {
 	register_taxonomy( 'project_tag', array( 'project' ), $args );
 }
 add_action( 'init', 'wdp_register_portfolio_project_post_type', 0 );
+
+function wdp_custom_columns( $columns ) {
+	// Add custom column "project_image"
+	return array_merge(
+		array_splice( $columns, 0, 2 ),
+		array( 'project_featured' => 'Featured' ),
+		array( 'project_image' => 'Project Image' ),
+		$columns
+	);
+}
+add_action( "manage_edit-project_columns", 'wdp_custom_columns' );
+
+function wdp_display_columns( $column, $post_id ) {
+	// Redefine our columns, preserving some default fields
+	switch( $column ) {
+		case 'project_featured':
+			$featured = get_field( 'featured', $post_id );
+			
+			if ( $featured ) {
+				$link = add_query_arg( array( 'wdp_action' => 'remove-featured', 'wdp_id' => $post_id) );
+				$text = '<span class="dashicons dashicons-star-filled"><span class="screen-reader-text">Remove featured status</span></span>';
+			}else{
+				$link = add_query_arg( array( 'wdp_action' => 'mark-featured', 'wdp_id' => $post_id) );
+				$text = '<span class="dashicons dashicons-star-empty"><span class="screen-reader-text">Add featured status</span></span>';
+				
+			}
+			
+			echo '<a href="'. esc_attr($link) .'">'. $text .'</a>';
+			break;
+			
+		case 'project_image':
+			$image = get_field( 'screenshot_desktop', $post_id );
+			if ( !$image ) {
+				echo '<em>No image</em>';
+				return;
+			}
+			
+			$thumbnail = isset($image['sizes']['thumbnail']) ? $image['sizes']['thumbnail'] : $image['url'];
+			echo '<a href="'. get_edit_post_link($post_id) .'"><img src="'. $thumbnail .'"></a>';
+			break;
+	};
+}
+add_action( "manage_project_posts_custom_column", 'wdp_display_columns', 10, 2 );
+
+function wdp_sort_columns( $columns ) {
+	$columns['project_featured'] = 'featured';
+	$columns['project_image'] = 'screenshot_desktop';
+	return $columns;
+}
+add_action( "manage_edit-project_sortable_columns", 'wdp_sort_columns' );
+
+function wdp_toggle_featured_project_status() {
+	if ( isset($_REQUEST['wdp_action']) ) {
+		$feature = null;
+		if ( $_REQUEST['wdp_action'] == 'remove-featured' ) $feature = false;
+		if ( $_REQUEST['wdp_action'] == 'mark-featured' ) $feature = true;
+		if ( $feature === null ) return;
+		
+		$post_id = isset($_REQUEST['wdp_id']) ? (int) $_REQUEST['wdp_id'] : false;
+		if ( !$post_id || get_post_type($post_id) != 'project' ) return;
+		
+		update_field( 'featured', $feature, $post_id );
+		wp_redirect( remove_query_arg( array( 'wdp_action', 'wdp_id' ) ) );
+		exit;
+	}
+}
+add_action( 'admin_init', 'wdp_toggle_featured_project_status' );

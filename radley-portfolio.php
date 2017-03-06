@@ -24,6 +24,10 @@ function wdp_init_plugin() {
 	include_once( WDP_PATH . '/includes/options.php' );
 	include_once( WDP_PATH . '/includes/enqueue.php' );
 	include_once( WDP_PATH . '/includes/post-type.php' );
+	
+	// custom fields
+	include_once( WDP_PATH . '/fields/project-features.php' );
+	include_once( WDP_PATH . '/fields/project-information.php' );
 }
 add_action( 'plugins_loaded', 'wdp_init_plugin' );
 
