@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Web Developer Portfolio
-Version:     1.0.0b
+Version:     1.0.1
 Plugin URI:  http://radleysustaire.com/
 Description: Designed to display portfolio items for a web developer. Demonstrate your work with photos, categorize items, and embed your favorites using the shortcode [rad_featured_portfolio].
 Author:      Radley Sustaire &lt;radleygh@gmail.com&gt;
-Author URI:  mailto:radleygh@gmail.com
+Author URI:  http://radleysustaire.com/
 License:     GPLv2
 */
 
@@ -13,7 +13,7 @@ if( !defined( 'ABSPATH' ) ) exit;
 
 define( 'WDP_URL', untrailingslashit(plugin_dir_url( __FILE__ )) );
 define( 'WDP_PATH', dirname(__FILE__) );
-define( 'WDP_VERSION', '1.0.0b' );
+define( 'WDP_VERSION', '1.0.1' );
 
 function wdp_init_plugin() {
 	if ( !class_exists( 'acf' ) ) {
