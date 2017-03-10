@@ -44,6 +44,29 @@ if( function_exists('acf_add_local_field_group') ):
 				'maxlength' => '',
 			),
 			array (
+				'key' => 'field_58c249d10fbbd',
+				'label' => 'Testimonial',
+				'name' => 'testimonial',
+				'type' => 'post_object',
+				'instructions' => 'Changing this value also assigns this project to the testimonial (two-way).',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => array (
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'post_type' => array (
+					0 => 'testimonial',
+				),
+				'taxonomy' => array (
+				),
+				'allow_null' => 1,
+				'multiple' => 0,
+				'return_format' => 'object',
+				'ui' => 1,
+			),
+			array (
 				'key' => 'field_58b7bd857492d',
 				'label' => 'Screenshot (Desktop)',
 				'name' => 'screenshot_desktop',

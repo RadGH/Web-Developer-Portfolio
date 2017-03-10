@@ -2,7 +2,7 @@
 
 if( !defined( 'ABSPATH' ) ) exit;
 
-function wdp_register_settings_menu() {
+function pbr_register_settings_menu() {
 	acf_add_options_sub_page(array(
 		'parent_slug' => 'options-general.php',
 		'page_title'  => 'Web Developer Portfolio &ndash; Settings',
@@ -10,4 +10,4 @@ function wdp_register_settings_menu() {
 		'autoload'    => false,
 	));
 }
-add_action( 'admin_menu', 'wdp_register_settings_menu' );
+add_action( 'admin_menu', 'pbr_register_settings_menu' );

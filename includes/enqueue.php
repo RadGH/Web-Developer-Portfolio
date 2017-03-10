@@ -2,7 +2,7 @@
 
 if( !defined( 'ABSPATH' ) ) exit;
 
-function wdp_enqueue_admin_scripts() {
-	wp_enqueue_style( 'wdp-admin', WDP_URL . '/assets/wdp-admin.css', array(), WDP_VERSION );
+function pbr_enqueue_admin_scripts() {
+	wp_enqueue_style( 'pbr-admin', PBR_URL . '/assets/pbr-admin.css', array(), PBR_VERSION );
 }
-add_action( 'admin_enqueue_scripts', 'wdp_enqueue_admin_scripts' );
+add_action( 'admin_enqueue_scripts', 'pbr_enqueue_admin_scripts' );
